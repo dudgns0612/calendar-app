@@ -1,15 +1,15 @@
-import { MonthDates, DaySchedule } from '../../types/calendarTypes';
+import { CalendarDate, DaySchedule } from '../../types/calendarTypes';
 
 import styles from './Calendar.module.css';
 
 interface CalendarBodyProps {
-  monthDates: MonthDates[][];
+  monthDates: CalendarDate[][];
   daySchedules: DaySchedule[];
   onClickDaySchedule: (daySchedule: DaySchedule) => void;
 }
 
 // 캘린더 달력 표출 컴포넌트
-const CalendarBody = ({ monthDates, daySchedules, onClickDaySchedule }: CalendarBodyProps) => {
+const CalendarMonthBody = ({ monthDates, daySchedules, onClickDaySchedule }: CalendarBodyProps) => {
   const handleScheduleClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     schedule: DaySchedule
@@ -23,13 +23,13 @@ const CalendarBody = ({ monthDates, daySchedules, onClickDaySchedule }: Calendar
       <table className={styles.date_table}>
         <thead>
           <tr className={styles.date_table_thead}>
-            <td>Sunday</td>
+            <td className={styles.sunday_color}>Sunday</td>
             <td>Monday</td>
             <td>Tuesday</td>
             <td>Wednesday</td>
             <td>Thursday</td>
             <td>Friday</td>
-            <td>Saturday</td>
+            <td className={styles.saturday_color}>Saturday</td>
           </tr>
         </thead>
         <tbody>
@@ -91,4 +91,4 @@ const CalendarBody = ({ monthDates, daySchedules, onClickDaySchedule }: Calendar
   );
 };
 
-export default CalendarBody;
+export default CalendarMonthBody;

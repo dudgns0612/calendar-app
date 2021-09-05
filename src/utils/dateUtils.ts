@@ -1,8 +1,8 @@
 import moment, { Moment } from 'moment';
-import { MonthDates } from '../types/calendarTypes';
+import { CalendarDate } from '../types/calendarTypes';
 
 // 선택 월 일 정보 계산 함수
-export const getMonthDates = (monthDate: Moment): MonthDates[][] => {
+export const getMonthDates = (monthDate: Moment): CalendarDate[][] => {
   const today = moment();
   const startWeek = monthDate.startOf('month').week();
   let endWeek = monthDate.endOf('month').week();
@@ -45,6 +45,21 @@ export const getMonthDates = (monthDate: Moment): MonthDates[][] => {
       }
       calendar.push(weekCalendar);
     }
+  }
+
+  return calendar;
+};
+
+// 선택 주간 월 일 정보
+export const getWeekDates = (weekDate: Moment): CalendarDate[] => {
+  const today = moment();
+
+  const calendar = [];
+  for (let i = 0; i < 7; i++) {
+    const date = weekDate.clone().add(i, 'day');
+    const dayStr = date.format('D');
+    const isToday = today.format('YYYYMMDD') === date.format('YYYYMMDD');
+    calendar.push({ date, dayStr, isToday });
   }
 
   return calendar;

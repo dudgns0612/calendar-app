@@ -1,10 +1,10 @@
 import { Moment } from 'moment';
 
-export type MonthDates = {
+export type CalendarDate = {
   date: Moment;
   dayStr: string;
   isToday: boolean;
-  isCurrentMonth: boolean;
+  isCurrentMonth?: boolean;
 };
 
 export type DaySchedule = {

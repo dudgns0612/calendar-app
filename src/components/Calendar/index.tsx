@@ -1,25 +1,31 @@
 import { useEffect, useState } from 'react';
 import moment, { Moment } from 'moment';
-import CalendarHeader from './CalendarHeader';
-import CalendarBody from './CalendarBody';
+import CalendarMonthHeader from './CalendarMonthHeader';
+import CalendarWeekHeader from './CalendarWeekHeader';
+import CalendarMonthBody from './CalendarMonthBody';
+import CalendarWeekBody from './CalendarWeekBody';
 import ScheduleSaveModal from '../ScheduleSaveModal';
 
-import { MonthDates, DaySchedule } from '../../types/calendarTypes';
-import { getMonthDates } from '../../utils/dateUtils';
+import { CalendarDate, DaySchedule } from '../../types/calendarTypes';
+import { getMonthDates, getWeekDates } from '../../utils/dateUtils';
 import styles from './Calendar.module.css';
 
 interface CalendarProps {
-  daySchdules: DaySchedule[];
+  daySchedules: DaySchedule[];
   onChangeDaySchedule: (daySchdule: DaySchedule) => void;
   onDeleteDaySchedule: (daySchdule: DaySchedule) => void;
 }
 
 // 캘린더 컴포넌트
-const Calendar = ({ daySchdules, onChangeDaySchedule, onDeleteDaySchedule }: CalendarProps) => {
+const Calendar = ({ daySchedules, onChangeDaySchedule, onDeleteDaySchedule }: CalendarProps) => {
   // 해당 월 달력 정보
-  const [monthDates, setMonthDates] = useState<MonthDates[][]>([]);
+  const [monthDates, setMonthDates] = useState<CalendarDate[][]>([]);
+  // 해당 주 달력 정보
+  const [weekDates, setWeekDates] = useState<CalendarDate[]>([]);
   // 해당 월 정보
   const [currentDate, setCurrentDate] = useState<Moment>(moment());
+  // 해당 주정보
+  const [currenWeek, setCurrentWeek] = useState<Moment>(moment().startOf('week'));
   // 선택 스케줄 정보
   const [selectDaySchedule, setSelectDaySchedule] = useState<DaySchedule>({
     scheduleNo: 0,
@@ -38,9 +44,18 @@ const Calendar = ({ daySchdules, onChangeDaySchedule, onDeleteDaySchedule }: Cal
     setMonthDates(getMonthDates(currentDate));
   }, [currentDate]);
 
-  // 달력 변경 이벤트
+  // 현재 주 정보가 변경 될 경우
+  useEffect(() => {
+    setWeekDates(getWeekDates(currenWeek));
+  }, [currenWeek]);
+
+  // 달력 월 변경 이벤트
   const handleMonthChange = (changeDate: Moment) => {
-    setCurrentDate(changeDate);
+    if (calendarType === 'month') {
+      setCurrentDate(changeDate);
+    } else {
+      setCurrentWeek(changeDate);
+    }
   };
 
   // 일정 추가 및 달력 수정 모달 표출 이벤트
@@ -54,6 +69,7 @@ const Calendar = ({ daySchdules, onChangeDaySchedule, onDeleteDaySchedule }: Cal
     setIsSaveModal(false);
   };
 
+  // 달력 월/주 변경
   const handleCalendarTypeChange = (type: string) => {
     setCalendarType(type);
   };
@@ -66,7 +82,7 @@ const Calendar = ({ daySchdules, onChangeDaySchedule, onDeleteDaySchedule }: Cal
     if (daySchedule.scheduleNo === 0) {
       saveDaySchedule = {
         ...daySchedule,
-        scheduleNo: daySchdules.length + 1,
+        scheduleNo: daySchedules.length + 1,
       };
     }
     onChangeDaySchedule(saveDaySchedule);
@@ -81,20 +97,35 @@ const Calendar = ({ daySchdules, onChangeDaySchedule, onDeleteDaySchedule }: Cal
 
   return (
     <div className={styles.wrapper}>
-      <CalendarHeader
-        monthDate={currentDate}
-        calendarType={calendarType}
-        onChangeMonth={handleMonthChange}
-        onChangeCalendarType={handleCalendarTypeChange}
-      />
-      <CalendarBody
-        monthDates={monthDates}
-        daySchedules={daySchdules}
-        onClickDaySchedule={handleSaveModalOpen}
-      />
+      {calendarType === 'month' ? (
+        <>
+          <CalendarMonthHeader
+            monthDate={currentDate}
+            calendarType={calendarType}
+            onChangeMonth={handleMonthChange}
+            onChangeCalendarType={handleCalendarTypeChange}
+          />
+          <CalendarMonthBody
+            monthDates={monthDates}
+            daySchedules={daySchedules}
+            onClickDaySchedule={handleSaveModalOpen}
+          />
+        </>
+      ) : (
+        <>
+          <CalendarWeekHeader
+            weekDate={currenWeek}
+            calendarType={calendarType}
+            onChangeWeek={handleMonthChange}
+            onChangeCalendarType={handleCalendarTypeChange}
+          />
+          <CalendarWeekBody weekDates={weekDates} daySchedules={daySchedules} />
+        </>
+      )}
+
       {isSaveModal && (
         <ScheduleSaveModal
-          daySchedules={daySchdules}
+          daySchedules={daySchedules}
           daySchedule={selectDaySchedule}
           onClickSave={handleDayScheduleChange}
           onClickDelete={handleDayScheduleDelete}

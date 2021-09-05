@@ -27,7 +27,7 @@ function App() {
   return (
     <>
       <Calendar
-        daySchdules={daySchedules}
+        daySchedules={daySchedules}
         onChangeDaySchedule={handleDayScheduleChange}
         onDeleteDaySchedule={handleDayScheduleCancle}
       />

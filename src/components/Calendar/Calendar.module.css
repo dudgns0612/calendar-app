@@ -68,11 +68,11 @@
   height: 30px;
 }
 
-.date_table_thead td:first-child {
+.sunday_color {
   color: #eb5757;
 }
 
-.date_table_thead td:last-child {
+.saturday_color {
   color: #2f80ed;
 }
 
@@ -135,4 +135,13 @@ td {
   font-size: 1vh;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.week_day_schedule {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-size: 1vh;
+  height: 100%;
 }
