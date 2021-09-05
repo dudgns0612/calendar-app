@@ -83,8 +83,8 @@ const ScheduleSaveModal = ({
           startDateMoment < validDaySchedules[i].endDate) ||
         (endDateMoment > validDaySchedules[i].startDate &&
           endDateMoment < validDaySchedules[i].endDate) ||
-        (startDateMoment < validDaySchedules[i].startDate &&
-          endDateMoment > validDaySchedules[i].endDate)
+        (startDateMoment <= validDaySchedules[i].startDate &&
+          endDateMoment >= validDaySchedules[i].endDate)
       ) {
         alert('일정이 중복됩니다. 일정을 확인하여 주세요.');
         return;
