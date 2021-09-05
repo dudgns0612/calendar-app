@@ -1,0 +1,138 @@
+.wrapper {
+  margin: 20px;
+}
+
+/* 캘린더 헤더 */
+.header_wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.date_display_wrap {
+  display: flex;
+}
+
+.date_display_wrap span {
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 50px;
+}
+
+.date_display_wrap button {
+  border: 0;
+}
+
+.today_wrap {
+  width: 100px;
+}
+
+.today_button {
+  width: 50px;
+  height: 30px;
+  border: 1px solid #d2d2d2;
+  border-radius: 40px;
+}
+
+.month_button {
+  width: 50px;
+  height: 30px;
+  border: 1px solid #d2d2d2;
+  border-radius: 35% 0% 0% 35%;
+}
+
+.week_button {
+  width: 50px;
+  height: 30px;
+  border: 1px solid #d2d2d2;
+  border-radius: 0% 35% 35% 0%;
+}
+
+.active {
+  background-color: black;
+  color: white;
+  border: 0;
+}
+
+.body_wrap {
+  margin-top: 50px;
+}
+
+/* 캘린더 날짜 */
+.date_table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.date_table thead td {
+  text-align: center;
+  height: 30px;
+}
+
+.date_table_thead td:first-child {
+  color: #eb5757;
+}
+
+.date_table_thead td:last-child {
+  color: #2f80ed;
+}
+
+.date_table tbody td {
+  width: 100px;
+  height: 120px;
+}
+
+.date_table tr,
+td {
+  border: 1px solid #828282;
+  color: #828282;
+}
+
+.data_table_day {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  cursor: pointer;
+}
+
+.data_table_day:hover {
+  background: rgba(125, 130, 134, 0.1);
+}
+
+.data_table_day span {
+  margin: 10px;
+  height: 15%;
+  color: #e0e0e0;
+}
+
+.data_table_day > div {
+  height: 85%;
+}
+
+.today {
+  background: #0078ff;
+  color: #ffffff;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.current_month_day {
+  color: #828282 !important;
+}
+
+.day_schedule {
+  display: flex;
+  flex-direction: column;
+}
+
+.day_schedule_item {
+  background-color: #0078ff;
+  color: #ffffff;
+  height: 28%;
+  padding: 6px 10px 2px 10px;
+  margin: 2px 5px;
+  font-size: 1vh;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
